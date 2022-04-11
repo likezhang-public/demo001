@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type Test111Client interface {
 	Heathcheck(ctx context.Context, in *HealthcheckRequest, opts ...grpc.CallOption) (*HealthcheckResponse, error)
-	Helloworld(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error)
+	Helloworld2(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error)
 }
 
 type test111Client struct {
@@ -39,9 +39,9 @@ func (c *test111Client) Heathcheck(ctx context.Context, in *HealthcheckRequest, 
 	return out, nil
 }
 
-func (c *test111Client) Helloworld(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error) {
+func (c *test111Client) Helloworld2(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error) {
 	out := new(HelloReply)
-	err := c.cc.Invoke(ctx, "/module1.pp1.Test111/Helloworld", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/module1.pp1.Test111/Helloworld2", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func (c *test111Client) Helloworld(ctx context.Context, in *HelloRequest, opts .
 // for forward compatibility
 type Test111Server interface {
 	Heathcheck(context.Context, *HealthcheckRequest) (*HealthcheckResponse, error)
-	Helloworld(context.Context, *HelloRequest) (*HelloReply, error)
+	Helloworld2(context.Context, *HelloRequest) (*HelloReply, error)
 	mustEmbedUnimplementedTest111Server()
 }
 
@@ -64,8 +64,8 @@ type UnimplementedTest111Server struct {
 func (UnimplementedTest111Server) Heathcheck(context.Context, *HealthcheckRequest) (*HealthcheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Heathcheck not implemented")
 }
-func (UnimplementedTest111Server) Helloworld(context.Context, *HelloRequest) (*HelloReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Helloworld not implemented")
+func (UnimplementedTest111Server) Helloworld2(context.Context, *HelloRequest) (*HelloReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Helloworld2 not implemented")
 }
 func (UnimplementedTest111Server) mustEmbedUnimplementedTest111Server() {}
 
@@ -98,20 +98,20 @@ func _Test111_Heathcheck_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Test111_Helloworld_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Test111_Helloworld2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(HelloRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(Test111Server).Helloworld(ctx, in)
+		return srv.(Test111Server).Helloworld2(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/module1.pp1.Test111/Helloworld",
+		FullMethod: "/module1.pp1.Test111/Helloworld2",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(Test111Server).Helloworld(ctx, req.(*HelloRequest))
+		return srv.(Test111Server).Helloworld2(ctx, req.(*HelloRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -128,8 +128,8 @@ var Test111_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Test111_Heathcheck_Handler,
 		},
 		{
-			MethodName: "Helloworld",
-			Handler:    _Test111_Helloworld_Handler,
+			MethodName: "Helloworld2",
+			Handler:    _Test111_Helloworld2_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

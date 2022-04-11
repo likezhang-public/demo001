@@ -67,7 +67,7 @@ func local_request_Test111_Heathcheck_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func request_Test111_Helloworld_0(ctx context.Context, marshaler runtime.Marshaler, client Test111Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Test111_Helloworld2_0(ctx context.Context, marshaler runtime.Marshaler, client Test111Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq HelloRequest
 	var metadata runtime.ServerMetadata
 
@@ -79,12 +79,12 @@ func request_Test111_Helloworld_0(ctx context.Context, marshaler runtime.Marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.Helloworld(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.Helloworld2(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_Test111_Helloworld_0(ctx context.Context, marshaler runtime.Marshaler, server Test111Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Test111_Helloworld2_0(ctx context.Context, marshaler runtime.Marshaler, server Test111Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq HelloRequest
 	var metadata runtime.ServerMetadata
 
@@ -96,7 +96,7 @@ func local_request_Test111_Helloworld_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.Helloworld(ctx, &protoReq)
+	msg, err := server.Helloworld2(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -130,18 +130,18 @@ func RegisterTest111HandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 
 	})
 
-	mux.Handle("POST", pattern_Test111_Helloworld_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Test111_Helloworld2_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/module1.pp1.Test111/Helloworld", runtime.WithHTTPPathPattern("/api/helloworld"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/module1.pp1.Test111/Helloworld2", runtime.WithHTTPPathPattern("/api/helloworld"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Test111_Helloworld_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Test111_Helloworld2_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -149,7 +149,7 @@ func RegisterTest111HandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 			return
 		}
 
-		forward_Test111_Helloworld_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Test111_Helloworld2_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -214,23 +214,23 @@ func RegisterTest111HandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 
 	})
 
-	mux.Handle("POST", pattern_Test111_Helloworld_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Test111_Helloworld2_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/module1.pp1.Test111/Helloworld", runtime.WithHTTPPathPattern("/api/helloworld"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/module1.pp1.Test111/Helloworld2", runtime.WithHTTPPathPattern("/api/helloworld"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Test111_Helloworld_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Test111_Helloworld2_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Test111_Helloworld_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Test111_Helloworld2_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -240,11 +240,11 @@ func RegisterTest111HandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 var (
 	pattern_Test111_Heathcheck_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "healthcheck"}, ""))
 
-	pattern_Test111_Helloworld_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "helloworld"}, ""))
+	pattern_Test111_Helloworld2_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "helloworld"}, ""))
 )
 
 var (
 	forward_Test111_Heathcheck_0 = runtime.ForwardResponseMessage
 
-	forward_Test111_Helloworld_0 = runtime.ForwardResponseMessage
+	forward_Test111_Helloworld2_0 = runtime.ForwardResponseMessage
 )
