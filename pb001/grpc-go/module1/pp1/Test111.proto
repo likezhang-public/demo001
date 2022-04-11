@@ -14,7 +14,7 @@ service Test111 {
           get: "/api/healthcheck"
         };
     }
-    rpc Helloworld (HelloRequest) returns (HelloReply) {
+    rpc Helloworld2 (HelloRequest) returns (HelloReply) {
         option (google.api.http) = {
             post: "/api/helloworld"
             body: "*"
