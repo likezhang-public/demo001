@@ -48,7 +48,7 @@
     },
     "/api/helloworld": {
       "post": {
-        "operationId": "Test111_Helloworld",
+        "operationId": "Test111_Helloworld2",
         "responses": {
           "200": {
             "description": "A successful response.",
